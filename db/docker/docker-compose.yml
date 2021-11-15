@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  skylon_db:
+    container_name: skylon_db
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=skylon
+      - PGDATA=/data/skylon
+    volumes:
+      - skylon:/data/skylon
+    ports:
+      - '5432:5432'
+    networks:
+      - skylon
+    restart: on-failure
+
+networks:
+  skylon:
+    driver: bridge
+
+volumes:
+  skylon:
