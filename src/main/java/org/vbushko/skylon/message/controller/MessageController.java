@@ -14,31 +14,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MessageController {
 
-    private final MessageService messageService;
+    private final MessageService service;
 
     @GetMapping
     public List<MessageResponseDTO> findAll() {
-        return messageService.findAll();
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
     public MessageResponseDTO findById(@PathVariable("id") Long id) {
-        return messageService.findById(id);
+        return service.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MessageResponseDTO save(@RequestBody MessageRequestDTO request) {
-        return messageService.save(request);
+        return service.save(request);
     }
 
     @PutMapping("/{id}")
     public MessageResponseDTO update(@PathVariable("id") Long id, @RequestBody MessageRequestDTO request) {
-        return messageService.update(id, request);
+        return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
-        messageService.deleteById(id);
+        service.deleteById(id);
     }
 }

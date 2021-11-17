@@ -17,42 +17,42 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MessageService {
 
-    private final MessageMapper messageMapper;
-    private final MessageRepository messageRepository;
+    private final MessageMapper mapper;
+    private final MessageRepository repository;
 
     @Transactional(readOnly = true)
     public List<MessageResponseDTO> findAll() {
-        return messageRepository.findAll()
+        return repository.findAll()
                 .stream()
-                .map(messageMapper::map)
+                .map(mapper::map)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public MessageResponseDTO findById(Long id) {
-        Message message = messageRepository.findById(id)
+        Message message = repository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        return messageMapper.map(message);
+        return mapper.map(message);
     }
 
     @Transactional
     public MessageResponseDTO save(MessageRequestDTO request) {
-        Message message = messageMapper.map(request);
-        messageRepository.save(message);
-        return messageMapper.map(message);
+        Message message = mapper.map(request);
+        repository.save(message);
+        return mapper.map(message);
     }
 
     @Transactional
     public MessageResponseDTO update(Long id, MessageRequestDTO request) {
-        Message message = messageRepository.findById(id)
+        Message message = repository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        messageMapper.merge(request, message);
-        messageRepository.save(message);
-        return messageMapper.map(message);
+        mapper.merge(request, message);
+        repository.save(message);
+        return mapper.map(message);
     }
 
     @Transactional
     public void deleteById(Long id) {
-        messageRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

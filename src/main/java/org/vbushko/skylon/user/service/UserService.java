@@ -17,42 +17,42 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserMapper userMapper;
-    private final UserRepository userRepository;
+    private final UserMapper mapper;
+    private final UserRepository repository;
 
     @Transactional(readOnly = true)
     public List<UserResponseDTO> findAll() {
-        return userRepository.findAll()
+        return repository.findAll()
                 .stream()
-                .map(userMapper::map)
+                .map(mapper::map)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public UserResponseDTO findById(Long id) {
-        User user = userRepository.findById(id)
+        User user = repository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        return userMapper.map(user);
+        return mapper.map(user);
     }
 
     @Transactional
     public UserResponseDTO save(UserRequestDTO request) {
-        User user = userMapper.map(request);
-        userRepository.save(user);
-        return userMapper.map(user);
+        User user = mapper.map(request);
+        repository.save(user);
+        return mapper.map(user);
     }
 
     @Transactional
     public UserResponseDTO update(Long id, UserRequestDTO request) {
-        User user = userRepository.findById(id)
+        User user = repository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        userMapper.merge(request, user);
-        userRepository.save(user);
-        return userMapper.map(user);
+        mapper.merge(request, user);
+        repository.save(user);
+        return mapper.map(user);
     }
 
     @Transactional
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }
