@@ -30,7 +30,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserResponseDTO findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        User user = userRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
         return userMapper.map(user);
     }
 
@@ -43,7 +44,8 @@ public class UserService {
 
     @Transactional
     public UserResponseDTO update(Long id, UserRequestDTO request) {
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        User user = userRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
         userMapper.merge(request, user);
         userRepository.save(user);
         return userMapper.map(user);
