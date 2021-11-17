@@ -1,4 +1,4 @@
-package org.vbushko.skylon.usr.dto;
+package org.vbushko.skylon.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class UsrRequestDTO extends UsrDTO {
+public class UserRequestDTO extends UserDTO {
 
     private String password;
 }

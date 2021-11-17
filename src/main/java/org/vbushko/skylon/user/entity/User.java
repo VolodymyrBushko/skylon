@@ -1,19 +1,17 @@
-package org.vbushko.skylon.usr.entity;
+package org.vbushko.skylon.user.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "usr")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usr {
+public class User {
 
     @Id
     @EqualsAndHashCode.Exclude

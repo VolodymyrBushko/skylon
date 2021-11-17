@@ -1,4 +1,4 @@
-package org.vbushko.skylon.usr.dto;
+package org.vbushko.skylon.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class UsrResponseDTO extends UsrDTO {
+public class UserResponseDTO extends UserDTO {
 
     private Long id;
     private LocalDateTime createdAt;

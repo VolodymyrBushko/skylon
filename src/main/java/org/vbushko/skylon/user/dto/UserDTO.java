@@ -1,4 +1,4 @@
-package org.vbushko.skylon.usr.dto;
+package org.vbushko.skylon.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class UsrDTO implements Serializable {
+public abstract class UserDTO implements Serializable {
 
     private String firstName;
     private String lastName;
