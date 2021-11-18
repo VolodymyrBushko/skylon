@@ -22,17 +22,17 @@ public class MessageService {
 
     @Transactional(readOnly = true)
     public List<MessageResponseDTO> findAll() {
-        return repository.findAll()
-                .stream()
+        return repository.findAll().stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public MessageResponseDTO findById(Long id) {
-        Message message = repository.findById(id)
+        return repository.findById(id).stream()
+                .map(mapper::map)
+                .findFirst()
                 .orElseThrow(EntityNotFoundException::new);
-        return mapper.map(message);
     }
 
     @Transactional
@@ -40,19 +40,5 @@ public class MessageService {
         Message message = mapper.map(request);
         repository.save(message);
         return mapper.map(message);
-    }
-
-    @Transactional
-    public MessageResponseDTO update(Long id, MessageRequestDTO request) {
-        Message message = repository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        mapper.merge(request, message);
-        repository.save(message);
-        return mapper.map(message);
-    }
-
-    @Transactional
-    public void deleteById(Long id) {
-        repository.deleteById(id);
     }
 }

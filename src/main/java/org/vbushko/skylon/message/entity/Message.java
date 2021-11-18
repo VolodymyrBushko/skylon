@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "message")
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,21 +20,26 @@ import java.time.LocalDateTime;
 public class Message {
 
     @Id
-    @EqualsAndHashCode.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     private Long id;
     private String content;
 
     @CreatedDate
+    @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
+
     @LastModifiedDate
+    @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @EqualsAndHashCode.Exclude
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "conversation_id")
+    @EqualsAndHashCode.Exclude
     private Conversation conversation;
 }

@@ -22,37 +22,30 @@ public class ConversationService {
 
     @Transactional(readOnly = true)
     public List<ConversationResponseDTO> findAll() {
-        return repository.findAll()
-                .stream()
+        return repository.findAll().stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public ConversationResponseDTO findById(Long id) {
-        Conversation conversation = repository.findById(id)
+        return repository.findById(id).stream()
+                .map(mapper::map)
+                .findFirst()
                 .orElseThrow(EntityNotFoundException::new);
-        return mapper.map(conversation);
+    }
+
+    @Transactional(readOnly = true)
+    public Conversation findNativeById(Long id) {
+        return repository.findById(id).stream()
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional
     public ConversationResponseDTO save(ConversationRequestDTO request) {
-        Conversation conversation = mapper.map(request);
-        repository.save(conversation);
-        return mapper.map(conversation);
-    }
-
-    @Transactional
-    public ConversationResponseDTO update(Long id, ConversationRequestDTO request) {
-        Conversation conversation = repository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        mapper.merge(request, conversation);
-        repository.save(conversation);
-        return mapper.map(conversation);
-    }
-
-    @Transactional
-    public void deleteById(Long id) {
-        repository.deleteById(id);
+        Conversation conv = mapper.map(request);
+        repository.save(conv);
+        return mapper.map(conv);
     }
 }

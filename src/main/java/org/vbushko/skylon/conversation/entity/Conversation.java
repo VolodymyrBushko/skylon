@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "conversation")
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,24 +22,29 @@ import java.util.List;
 public class Conversation {
 
     @Id
-    @EqualsAndHashCode.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     private Long id;
     private String title;
     private String description;
     private String image;
 
     @CreatedDate
+    @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
+
     @LastModifiedDate
+    @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
     @ManyToMany(mappedBy = "conversations")
+    @EqualsAndHashCode.Exclude
     private List<User> users = new ArrayList<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "conversation"
     )
+    @EqualsAndHashCode.Exclude
     private List<Message> messages = new ArrayList<>();
 }

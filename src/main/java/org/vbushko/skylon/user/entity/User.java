@@ -22,8 +22,8 @@ import java.util.List;
 public class User {
 
     @Id
-    @EqualsAndHashCode.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     private Long id;
     private String firstName;
     private String lastName;
@@ -35,11 +35,15 @@ public class User {
     private Integer age;
 
     @CreatedDate
+    @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
+
     @LastModifiedDate
+    @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user")
+    @EqualsAndHashCode.Exclude
     private List<Message> messages = new ArrayList<>();
 
     @ManyToMany
@@ -48,5 +52,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "conversation_id")
     )
+    @EqualsAndHashCode.Exclude
     private List<Conversation> conversations = new ArrayList<>();
 }

@@ -32,13 +32,8 @@ public class UserController {
         return service.save(request);
     }
 
-    @PutMapping("/{id}")
-    public UserResponseDTO update(@PathVariable("id") Long id, @RequestBody UserRequestDTO request) {
-        return service.update(id, request);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        service.deleteById(id);
+    @GetMapping("/{userId}/join/conversations/{convId}")
+    public void joinConversation(@PathVariable("userId") Long userId, @PathVariable("convId") Long convId) {
+        service.joinConversation(userId, convId);
     }
 }

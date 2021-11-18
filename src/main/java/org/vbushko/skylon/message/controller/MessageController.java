@@ -31,14 +31,4 @@ public class MessageController {
     public MessageResponseDTO save(@RequestBody MessageRequestDTO request) {
         return service.save(request);
     }
-
-    @PutMapping("/{id}")
-    public MessageResponseDTO update(@PathVariable("id") Long id, @RequestBody MessageRequestDTO request) {
-        return service.update(id, request);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        service.deleteById(id);
-    }
 }
