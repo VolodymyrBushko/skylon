@@ -4,9 +4,13 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.vbushko.skylon.conversation.entity.Conversation;
+import org.vbushko.skylon.message.entity.Message;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usr")
@@ -34,4 +38,15 @@ public class User {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Message> messages = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_conversation",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id")
+    )
+    private List<Conversation> conversations = new ArrayList<>();
 }
