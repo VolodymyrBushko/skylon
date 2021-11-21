@@ -4,8 +4,8 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.vbushko.skylon.conversation.entity.Conversation;
 import org.vbushko.skylon.message.entity.Message;
+import org.vbushko.skylon.userconversation.entity.UserConversation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -42,16 +42,11 @@ public class User {
     @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     @EqualsAndHashCode.Exclude
     private List<Message> messages = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_conversation",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "conversation_id")
-    )
+    @OneToMany(mappedBy = "user")
     @EqualsAndHashCode.Exclude
-    private List<Conversation> conversations = new ArrayList<>();
+    private List<UserConversation> userConversations = new ArrayList<>();
 }

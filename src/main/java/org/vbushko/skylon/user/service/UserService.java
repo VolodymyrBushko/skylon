@@ -56,11 +56,5 @@ public class UserService {
 
     @Transactional
     public void joinConversation(Long userId, Long convId) {
-        User user = findNativeById(userId);
-        Conversation conv = convService.findNativeById(convId);
-        conv.getUsers().add(user);
-        user.getConversations().add(conv);
-        convRepository.save(conv);
-        userRepository.save(user);
     }
 }

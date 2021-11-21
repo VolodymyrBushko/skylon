@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.vbushko.skylon.message.entity.Message;
 import org.vbushko.skylon.user.entity.User;
+import org.vbushko.skylon.userconversation.entity.UserConversation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,9 +38,14 @@ public class Conversation {
     @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
-    @ManyToMany(mappedBy = "conversations")
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     @EqualsAndHashCode.Exclude
-    private List<User> users = new ArrayList<>();
+    private User owner;
+
+    @OneToMany(mappedBy = "conversation")
+    @EqualsAndHashCode.Exclude
+    private List<UserConversation> userConversations = new ArrayList<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
