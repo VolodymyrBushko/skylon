@@ -31,9 +31,4 @@ public class UserController {
     public UserResponseDTO save(@RequestBody UserRequestDTO request) {
         return service.save(request);
     }
-
-    @GetMapping("/{userId}/join/conversations/{convId}")
-    public void joinConversation(@PathVariable("userId") Long userId, @PathVariable("convId") Long convId) {
-        service.joinConversation(userId, convId);
-    }
 }

@@ -3,9 +3,6 @@ package org.vbushko.skylon.user.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.vbushko.skylon.conversation.entity.Conversation;
-import org.vbushko.skylon.conversation.repository.ConversationRepository;
-import org.vbushko.skylon.conversation.service.ConversationService;
 import org.vbushko.skylon.exception.EntityNotFoundException;
 import org.vbushko.skylon.user.dto.UserRequestDTO;
 import org.vbushko.skylon.user.dto.UserResponseDTO;
@@ -22,8 +19,6 @@ public class UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final ConversationRepository convRepository;
-    private final ConversationService convService;
 
     @Transactional(readOnly = true)
     public List<UserResponseDTO> findAll() {
@@ -52,9 +47,5 @@ public class UserService {
         User user = userMapper.map(request);
         userRepository.save(user);
         return userMapper.map(user);
-    }
-
-    @Transactional
-    public void joinConversation(Long userId, Long convId) {
     }
 }
