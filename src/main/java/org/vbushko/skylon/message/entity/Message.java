@@ -34,9 +34,9 @@ public class Message {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "sender_id")
     @EqualsAndHashCode.Exclude
-    private User owner;
+    private User sender;
 
     @ManyToOne
     @JoinColumn(name = "conversation_id")

@@ -1,19 +1,19 @@
 package org.vbushko.skylon.message.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
-public class MessageResponseDTO extends MessageDTO {
+@AllArgsConstructor
+public class MessageResponseDTO implements Serializable {
 
     private Long id;
+    private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

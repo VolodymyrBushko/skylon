@@ -1,19 +1,21 @@
 package org.vbushko.skylon.conversation.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
-public class ConversationResponseDTO extends ConversationDTO {
+@AllArgsConstructor
+public class ConversationResponseDTO implements Serializable {
 
     private Long id;
+    private String title;
+    private String description;
+    private String image;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -1,13 +1,17 @@
 package org.vbushko.skylon.conversation.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
-public class ConversationRequestDTO extends ConversationDTO {
+@AllArgsConstructor
+public class ConversationRequestDTO implements Serializable {
+
+    private String title;
+    private String description;
+    private String image;
 }

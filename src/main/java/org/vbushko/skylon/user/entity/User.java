@@ -42,7 +42,7 @@ public class User {
     @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "sender")
     @EqualsAndHashCode.Exclude
     private List<Message> messages = new ArrayList<>();
 
