@@ -1,14 +1,14 @@
 package org.vbushko.skylon.conversation.mapper;
 
 import org.springframework.stereotype.Component;
-import org.vbushko.skylon.conversation.dto.ConversationRequestDTO;
-import org.vbushko.skylon.conversation.dto.ConversationResponseDTO;
+import org.vbushko.skylon.conversation.dto.ConversationRequestDto;
+import org.vbushko.skylon.conversation.dto.ConversationResponseDto;
 import org.vbushko.skylon.conversation.entity.Conversation;
 
 @Component
 public class ConversationMapper {
 
-    public Conversation map(ConversationRequestDTO request) {
+    public Conversation map(ConversationRequestDto request) {
         return Conversation.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -16,8 +16,8 @@ public class ConversationMapper {
                 .build();
     }
 
-    public ConversationResponseDTO map(Conversation conversation) {
-        return ConversationResponseDTO.builder()
+    public ConversationResponseDto map(Conversation conversation) {
+        return ConversationResponseDto.builder()
                 .id(conversation.getId())
                 .title(conversation.getTitle())
                 .description(conversation.getDescription())
@@ -27,7 +27,7 @@ public class ConversationMapper {
                 .build();
     }
 
-    public void merge(ConversationRequestDTO request, Conversation conversation) {
+    public void merge(ConversationRequestDto request, Conversation conversation) {
         conversation.setTitle(request.getTitle());
         conversation.setDescription(request.getDescription());
         conversation.setImage(request.getImage());

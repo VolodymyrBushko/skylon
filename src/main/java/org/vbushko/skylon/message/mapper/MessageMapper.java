@@ -1,21 +1,21 @@
 package org.vbushko.skylon.message.mapper;
 
 import org.springframework.stereotype.Component;
-import org.vbushko.skylon.message.dto.MessageRequestDTO;
-import org.vbushko.skylon.message.dto.MessageResponseDTO;
+import org.vbushko.skylon.message.dto.MessageRequestDto;
+import org.vbushko.skylon.message.dto.MessageResponseDto;
 import org.vbushko.skylon.message.entity.Message;
 
 @Component
 public class MessageMapper {
 
-    public Message map(MessageRequestDTO request) {
+    public Message map(MessageRequestDto request) {
         return Message.builder()
                 .content(request.getContent())
                 .build();
     }
 
-    public MessageResponseDTO map(Message message) {
-        return MessageResponseDTO.builder()
+    public MessageResponseDto map(Message message) {
+        return MessageResponseDto.builder()
                 .id(message.getId())
                 .content(message.getContent())
                 .createdAt(message.getCreatedAt())
@@ -23,7 +23,7 @@ public class MessageMapper {
                 .build();
     }
 
-    public void merge(MessageRequestDTO request, Message message) {
+    public void merge(MessageRequestDto request, Message message) {
         message.setContent(request.getContent());
     }
 }

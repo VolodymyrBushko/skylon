@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageRequestDTO implements Serializable {
+public class MessageRequestDto implements Serializable {
 
     private String content;
 }

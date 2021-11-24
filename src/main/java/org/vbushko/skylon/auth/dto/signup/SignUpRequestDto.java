@@ -1,4 +1,4 @@
-package org.vbushko.skylon.user.dto;
+package org.vbushko.skylon.auth.dto.signup;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestDTO implements Serializable {
+public class SignUpRequestDto implements Serializable {
 
     private String firstName;
     private String lastName;

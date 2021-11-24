@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConversationResponseDTO implements Serializable {
+public class ConversationResponseDto implements Serializable {
 
     private Long id;
     private String title;

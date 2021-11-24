@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConversationRequestDTO implements Serializable {
+public class ConversationRequestDto implements Serializable {
 
     private String title;
     private String description;

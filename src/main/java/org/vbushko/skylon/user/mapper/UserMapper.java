@@ -1,14 +1,14 @@
 package org.vbushko.skylon.user.mapper;
 
 import org.springframework.stereotype.Component;
-import org.vbushko.skylon.user.dto.UserRequestDTO;
-import org.vbushko.skylon.user.dto.UserResponseDTO;
+import org.vbushko.skylon.user.dto.UserRequestDto;
+import org.vbushko.skylon.user.dto.UserResponseDto;
 import org.vbushko.skylon.user.entity.User;
 
 @Component
 public class UserMapper {
 
-    public User map(UserRequestDTO request) {
+    public User map(UserRequestDto request) {
         return User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -21,8 +21,8 @@ public class UserMapper {
                 .build();
     }
 
-    public UserResponseDTO map(User user) {
-        return UserResponseDTO.builder()
+    public UserResponseDto map(User user) {
+        return UserResponseDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
@@ -36,7 +36,7 @@ public class UserMapper {
                 .build();
     }
 
-    public void merge(UserRequestDTO request, User user) {
+    public void merge(UserRequestDto request, User user) {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setLogin(request.getLogin());
