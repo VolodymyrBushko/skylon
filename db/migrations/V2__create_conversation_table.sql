@@ -12,3 +12,9 @@ CREATE TABLE IF NOT EXISTS conversation
 
     CONSTRAINT FK_CONVERSATION_USR FOREIGN KEY (owner_id) REFERENCES usr (id)
 );
+
+CREATE SEQUENCE IF NOT EXISTS conversation_id_sequence
+    INCREMENT 1
+    MINVALUE 1
+    START 1
+    OWNED BY conversation.id;

@@ -22,7 +22,8 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usr_id_generator")
+    @SequenceGenerator(name = "usr_id_generator", sequenceName = "usr_id_sequence", allocationSize = 1)
     @EqualsAndHashCode.Exclude
     private Long id;
     private String firstName;

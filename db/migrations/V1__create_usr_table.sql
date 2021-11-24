@@ -19,3 +19,9 @@ CREATE TABLE IF NOT EXISTS usr
 
     CHECK (age >= 0)
 );
+
+CREATE SEQUENCE IF NOT EXISTS usr_id_sequence
+    INCREMENT 1
+    MINVALUE 1
+    START 1
+    OWNED BY usr.id;

@@ -23,7 +23,8 @@ import java.util.List;
 public class Conversation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "conversation_id_generator")
+    @SequenceGenerator(name = "conversation_id_generator", sequenceName = "conversation_id_sequence", allocationSize = 1)
     @EqualsAndHashCode.Exclude
     private Long id;
     private String title;

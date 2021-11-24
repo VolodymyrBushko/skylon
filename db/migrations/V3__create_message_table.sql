@@ -12,3 +12,9 @@ CREATE TABLE IF NOT EXISTS message
     CONSTRAINT FK_MESSAGE_USER FOREIGN KEY (sender_id) REFERENCES usr (id),
     CONSTRAINT FK_MESSAGE_CONVERSATION FOREIGN KEY (conversation_id) REFERENCES conversation (id)
 );
+
+CREATE SEQUENCE IF NOT EXISTS message_id_sequence
+    INCREMENT 1
+    MINVALUE 1
+    START 1
+    OWNED BY message.id;

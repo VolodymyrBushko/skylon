@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_id_generator")
+    @SequenceGenerator(name = "message_id_generator", sequenceName = "message_id_sequence", allocationSize = 1)
     @EqualsAndHashCode.Exclude
     private Long id;
     private String content;
