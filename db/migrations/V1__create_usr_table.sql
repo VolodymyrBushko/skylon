@@ -1,21 +1,21 @@
-create table if not exists usr
+CREATE TABLE IF NOT EXISTS usr
 (
-    id            bigint                        not null,
-    first_name    varchar(25)                   not null,
-    last_name     varchar(25)                   not null,
-    login         varchar(50)                   not null,
-    email         varchar(100)                  not null,
-    description   varchar(255),
-    image         varchar(255),
-    password      varchar(510)                  not null,
-    age           integer                       not null,
-    created_at    timestamp without time zone   not null,
-    updated_at    timestamp without time zone   not null,
+    id            BIGINT                        NOT NULL,
+    first_name    VARCHAR(25)                   NOT NULL,
+    last_name     VARCHAR(25)                   NOT NULL,
+    login         VARCHAR(50)                   NOT NULL,
+    email         VARCHAR(100)                  NOT NULL,
+    description   VARCHAR(255),
+    image         VARCHAR(255),
+    password      VARCHAR(510)                  NOT NULL,
+    age           INTEGER                       NOT NULL,
+    created_at    TIMESTAMP WITHOUT TIME ZONE   NOT NULL,
+    updated_at    TIMESTAMP WITHOUT TIME ZONE   NOT NULL,
 
-    constraint PK_USR primary key (id),
+    CONSTRAINT PK_USR PRIMARY KEY (id),
 
-    constraint UQ_USR_LOGIN unique (login),
-    constraint UQ_USR_EMAIL unique (email),
+    CONSTRAINT UQ_USR_LOGIN UNIQUE (login),
+    CONSTRAINT UQ_USR_EMAIL UNIQUE (email),
 
-    check (age >= 0)
+    CHECK (age >= 0)
 );
