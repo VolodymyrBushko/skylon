@@ -6,4 +6,6 @@ import org.vbushko.skylon.user.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    boolean existsByLoginAndEmail(String login, String email);
 }
