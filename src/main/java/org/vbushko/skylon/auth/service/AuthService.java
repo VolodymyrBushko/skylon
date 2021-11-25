@@ -21,6 +21,8 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class AuthService {
 
+    private static final String BEARER = "Bearer";
+
     private final SignUpMapper mapper;
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
@@ -47,8 +49,10 @@ public class AuthService {
                 .filter(e -> passwordEncoder.matches(request.getPassword(), e.getPassword()))
                 .orElseThrow(EntityNotFoundException::new);
 
+        String token = String.format("%s %s", BEARER, jwtProvider.generateToken(request.getLogin()));
+
         return SignInResponseDto.builder()
-                .token(jwtProvider.generateToken(request.getLogin()))
+                .token(token)
                 .build();
     }
 }
