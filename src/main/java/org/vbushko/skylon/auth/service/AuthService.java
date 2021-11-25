@@ -15,6 +15,8 @@ import org.vbushko.skylon.security.JwtProvider;
 import org.vbushko.skylon.user.entity.User;
 import org.vbushko.skylon.user.repository.UserRepository;
 
+import java.util.stream.Stream;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -26,12 +28,15 @@ public class AuthService {
 
     @Transactional
     public SignUpResponseDto signUp(SignUpRequestDto request) {
-        User user = mapper.map(request);
-        boolean exists = repository.existsByLoginAndEmail(user.getLogin(), user.getEmail());
-        if (exists) {
-            throw new EntityAlreadyExistsException();
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = Stream.of(request)
+                .map(mapper::map)
+                .filter(e -> !repository.existsUserByLoginOrEmail(e.getLogin(), e.getEmail()))
+                .findFirst()
+                .orElseThrow(EntityAlreadyExistsException::new);
+
+        String password = passwordEncoder.encode(user.getPassword());
+        user.setPassword(password);
+
         repository.save(user);
         return mapper.map(user);
     }
