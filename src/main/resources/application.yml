@@ -17,3 +17,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/skylon
     locations: filesystem:db/migrations
     enabled: true
+
+jwt:
+  secret: secret-key
+  expiration: 7
