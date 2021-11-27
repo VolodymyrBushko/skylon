@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS usr
+CREATE TABLE IF NOT EXISTS "user"
 (
     id            BIGINT                        NOT NULL,
     first_name    VARCHAR(25)                   NOT NULL,
@@ -12,16 +12,16 @@ CREATE TABLE IF NOT EXISTS usr
     created_at    TIMESTAMP WITHOUT TIME ZONE   NOT NULL,
     updated_at    TIMESTAMP WITHOUT TIME ZONE   NOT NULL,
 
-    CONSTRAINT PK_USR PRIMARY KEY (id),
+    CONSTRAINT PK_USER PRIMARY KEY (id),
 
-    CONSTRAINT UQ_USR_LOGIN UNIQUE (login),
-    CONSTRAINT UQ_USR_EMAIL UNIQUE (email),
+    CONSTRAINT UQ_USER_LOGIN UNIQUE (login),
+    CONSTRAINT UQ_USER_EMAIL UNIQUE (email),
 
     CHECK (age >= 0)
 );
 
-CREATE SEQUENCE IF NOT EXISTS usr_id_sequence
+CREATE SEQUENCE IF NOT EXISTS user_id_sequence
     INCREMENT 1
     MINVALUE 1
     START 1
-    OWNED BY usr.id;
+    OWNED BY "user".id;

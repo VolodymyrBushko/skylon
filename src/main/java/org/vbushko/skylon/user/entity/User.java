@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "usr")
+@Table(name = "`user`")
 @Data
 @Builder
 @NoArgsConstructor
@@ -22,8 +22,8 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usr_id_generator")
-    @SequenceGenerator(name = "usr_id_generator", sequenceName = "usr_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
+    @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_sequence", allocationSize = 1)
     @EqualsAndHashCode.Exclude
     private Long id;
     private String firstName;
