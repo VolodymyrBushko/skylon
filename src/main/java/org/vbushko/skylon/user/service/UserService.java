@@ -18,4 +18,14 @@ public class UserService {
         return repository.findByLogin(login)
                 .orElseThrow(EntityNotFoundException::new);
     }
+
+    @Transactional
+    public User save(User user) {
+        return repository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsByLoginOrEmail(String login, String email) {
+        return repository.existsByLoginOrEmail(login, email);
+    }
 }

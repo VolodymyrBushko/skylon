@@ -13,9 +13,9 @@ import org.vbushko.skylon.exception.EntityAlreadyExistsException;
 import org.vbushko.skylon.exception.EntityNotFoundException;
 import org.vbushko.skylon.security.JwtProvider;
 import org.vbushko.skylon.user.entity.User;
-import org.vbushko.skylon.user.repository.UserRepository;
+import org.vbushko.skylon.user.service.UserService;
 
-import java.util.stream.Stream;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,35 +24,36 @@ public class AuthService {
     private static final String BEARER = "Bearer";
 
     private final SignUpMapper mapper;
-    private final UserRepository repository;
+    private final UserService service;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
     @Transactional
     public SignUpResponseDto signUp(SignUpRequestDto request) {
-        User user = Stream.of(request)
+        User user = Optional.ofNullable(request)
                 .map(mapper::map)
-                .filter(e -> !repository.existsUserByLoginOrEmail(e.getLogin(), e.getEmail()))
-                .findFirst()
+                .filter(e -> !service.existsByLoginOrEmail(e.getLogin(), e.getEmail()))
                 .orElseThrow(EntityAlreadyExistsException::new);
 
         String password = passwordEncoder.encode(user.getPassword());
         user.setPassword(password);
 
-        repository.save(user);
+        service.save(user);
         return mapper.map(user);
     }
 
     @Transactional(readOnly = true)
     public SignInResponseDto signIn(SignInRequestDto request) {
-        repository.findByLogin(request.getLogin())
-                .filter(e -> passwordEncoder.matches(request.getPassword(), e.getPassword()))
-                .orElseThrow(EntityNotFoundException::new);
+        User user = service.findByLogin(request.getLogin());
+        boolean passMatched = passwordEncoder.matches(request.getPassword(), user.getPassword());
 
-        String token = String.format("%s %s", BEARER, jwtProvider.generateToken(request.getLogin()));
+        if (passMatched) {
+            String token = String.format("%s %s", BEARER, jwtProvider.generateToken(user.getLogin()));
+            return SignInResponseDto.builder()
+                    .token(token)
+                    .build();
+        }
 
-        return SignInResponseDto.builder()
-                .token(token)
-                .build();
+        throw new EntityNotFoundException();
     }
 }
