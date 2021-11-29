@@ -13,34 +13,37 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.vbushko.skylon.security.Config.BEARER;
 
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
 
-    private static final String BEARER = "Bearer";
-    public static final String AUTHORIZATION = "Authorization";
-
     private final JwtProvider jwtProvider;
     private final CustomUserDetailsService detailsService;
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-        if (token != null && jwtProvider.validateToken(token.trim())) {
-            String login = jwtProvider.getLoginFromToken(token.trim());
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        String token = getTokenFromRequest((HttpServletRequest) request);
+        if (isNotBlank(token) && jwtProvider.validateToken(token)) {
+            String login = jwtProvider.getLoginFromToken(token);
             UserDetails customUserDetails = detailsService.loadUserByUsername(login);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(request, response);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
-        String bearer = request.getHeader(AUTHORIZATION);
-        if (bearer != null && bearer.startsWith(BEARER)) {
-            return bearer.substring(BEARER.length() + 1);
-        }
-        return null;
+        Optional<String> bearerOptional = Optional.ofNullable(request.getHeader(AUTHORIZATION));
+        String bearer = bearerOptional.map(String::trim).orElse(EMPTY);
+        return bearer.startsWith(BEARER)
+                ? bearer.substring(BEARER.length() + 1)
+                : EMPTY;
     }
 }

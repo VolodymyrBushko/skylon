@@ -21,3 +21,6 @@ spring:
 jwt:
   secret: secret-key
   expiration: 7
+
+password-encoder:
+  strength: 10

@@ -39,11 +39,6 @@ public class Conversation {
     @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    @EqualsAndHashCode.Exclude
-    private User owner;
-
     @OneToMany(mappedBy = "conversation")
     @EqualsAndHashCode.Exclude
     private List<UserConversation> userConversations = new ArrayList<>();

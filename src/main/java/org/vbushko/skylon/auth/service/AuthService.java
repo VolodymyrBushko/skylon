@@ -17,11 +17,11 @@ import org.vbushko.skylon.user.service.UserService;
 
 import java.util.Optional;
 
+import static org.vbushko.skylon.security.Config.BEARER;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
-    private static final String BEARER = "Bearer";
 
     private final SignUpMapper mapper;
     private final UserService service;
