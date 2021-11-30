@@ -15,8 +15,6 @@ import static org.springframework.http.HttpMethod.POST;
 @RequiredArgsConstructor
 public class Config extends WebSecurityConfigurerAdapter {
 
-    public static final String BEARER = "Bearer";
-
     private final JwtFilter jwtFilter;
 
     @Override

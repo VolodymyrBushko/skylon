@@ -11,7 +11,7 @@ import java.security.SecureRandom;
 @Configuration
 public class PasswordEncoderConfig {
 
-    @Value("${password-encoder.strength}")
+    @Value("${application.security.password-encoder.strength}")
     private int passwordStrength;
 
     @Bean

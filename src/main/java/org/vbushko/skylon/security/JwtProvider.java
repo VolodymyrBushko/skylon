@@ -6,25 +6,42 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+
+import static org.apache.commons.lang3.time.DateUtils.addSeconds;
 
 @Component
 public class JwtProvider {
 
-    @Value("${jwt.secret}")
+    @Value("${application.security.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.expiration}")
-    private int jwtExpiration;
+    @Value("${application.security.jwt.access-token-expiration-sec}")
+    private int jwtAccessTokenExpirationSec;
 
-    public String generateToken(String login) {
-        Date date = Date.from(LocalDate.now().plusDays(jwtExpiration).atStartOfDay(ZoneId.systemDefault()).toInstant());
+    @Value("${application.security.jwt.refresh-token-expiration-sec}")
+    private int jwtRefreshTokenExpirationSec;
+
+    public String generateAccessToken(String login) {
+        Date now = Calendar.getInstance().getTime();
+        Date expiration = addSeconds(now, jwtAccessTokenExpirationSec);
         return Jwts.builder()
                 .setSubject(login)
-                .setExpiration(date)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .setIssuedAt(now)
+                .setExpiration(expiration)
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                .compact();
+    }
+
+    public String generateRefreshToken(String login) {
+        Date now = Calendar.getInstance().getTime();
+        Date expiration = addSeconds(now, jwtRefreshTokenExpirationSec);
+        return Jwts.builder()
+                .setSubject(login)
+                .setIssuedAt(now)
+                .setExpiration(expiration)
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
 
@@ -47,14 +64,5 @@ public class JwtProvider {
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
-    }
-
-    public Date getExpirationDate(String token) {
-        Claims claims = Jwts
-                .parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getExpiration();
     }
 }

@@ -18,9 +18,11 @@ spring:
     locations: filesystem:db/migrations
     enabled: true
 
-jwt:
-  secret: secret-key
-  expiration: 7
-
-password-encoder:
-  strength: 10
+application:
+  security:
+    jwt:
+      secret: secret-key
+      access-token-expiration-sec: 600
+      refresh-token-expiration-sec: 604800
+    password-encoder:
+      strength: 10

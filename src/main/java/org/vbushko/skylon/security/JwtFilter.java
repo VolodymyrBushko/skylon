@@ -18,11 +18,12 @@ import java.util.Optional;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.vbushko.skylon.security.Config.BEARER;
 
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
+
+    private static final TokenType TOKEN_TYPE = TokenType.BEARER;
 
     private final JwtProvider jwtProvider;
     private final CustomUserDetailsService detailsService;
@@ -40,10 +41,10 @@ public class JwtFilter extends GenericFilterBean {
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
-        Optional<String> bearerOptional = Optional.ofNullable(request.getHeader(AUTHORIZATION));
-        String bearer = bearerOptional.map(String::trim).orElse(EMPTY);
-        return bearer.startsWith(BEARER)
-                ? bearer.substring(BEARER.length() + 1)
+        Optional<String> tokenOptional = Optional.ofNullable(request.getHeader(AUTHORIZATION));
+        String token = tokenOptional.map(String::trim).orElse(EMPTY);
+        return token.startsWith(TOKEN_TYPE.getType())
+                ? token.substring(TOKEN_TYPE.getType().length() + 1)
                 : EMPTY;
     }
 }

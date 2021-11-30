@@ -26,4 +26,9 @@ public class AuthController {
     public SignInResponseDto signIn(@RequestBody SignInRequestDto request) {
         return service.signIn(request);
     }
+
+    @GetMapping("/test")
+    public String authTest() {
+        return "The test has been completed successfully!";
+    }
 }
