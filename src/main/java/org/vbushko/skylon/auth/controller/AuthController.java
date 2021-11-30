@@ -3,6 +3,8 @@ package org.vbushko.skylon.auth.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.vbushko.skylon.auth.dto.refreshtoken.RefreshTokenRequestDto;
+import org.vbushko.skylon.auth.dto.refreshtoken.RefreshTokenResponseDto;
 import org.vbushko.skylon.auth.dto.signin.SignInRequestDto;
 import org.vbushko.skylon.auth.dto.signin.SignInResponseDto;
 import org.vbushko.skylon.auth.dto.signup.SignUpRequestDto;
@@ -25,6 +27,11 @@ public class AuthController {
     @PostMapping("/sign-in")
     public SignInResponseDto signIn(@RequestBody SignInRequestDto request) {
         return service.signIn(request);
+    }
+
+    @PostMapping("/refresh-token")
+    public RefreshTokenResponseDto refreshToken(@RequestBody RefreshTokenRequestDto request) {
+        return service.refreshToken(request);
     }
 
     @GetMapping("/test")

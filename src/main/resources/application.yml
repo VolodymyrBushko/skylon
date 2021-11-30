@@ -22,7 +22,7 @@ application:
   security:
     jwt:
       secret: secret-key
-      access-token-expiration-sec: 600
+      access-token-expiration-sec: 1 #600
       refresh-token-expiration-sec: 604800
     password-encoder:
       strength: 10

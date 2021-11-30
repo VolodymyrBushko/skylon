@@ -30,7 +30,7 @@ public class JwtFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        String token = getTokenFromRequest((HttpServletRequest) request);
+        String token = extractToken((HttpServletRequest) request);
         if (isNotBlank(token) && jwtProvider.validateToken(token)) {
             String login = jwtProvider.getLoginFromToken(token);
             UserDetails customUserDetails = detailsService.loadUserByUsername(login);
@@ -40,7 +40,7 @@ public class JwtFilter extends GenericFilterBean {
         filterChain.doFilter(request, response);
     }
 
-    private String getTokenFromRequest(HttpServletRequest request) {
+    private String extractToken(HttpServletRequest request) {
         Optional<String> tokenOptional = Optional.ofNullable(request.getHeader(AUTHORIZATION));
         String token = tokenOptional.map(String::trim).orElse(EMPTY);
         return token.startsWith(TOKEN_TYPE.getType())
