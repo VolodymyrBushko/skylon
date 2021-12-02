@@ -1,4 +1,4 @@
-package org.vbushko.skylon.security;
+package org.vbushko.skylon.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -7,15 +7,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.vbushko.skylon.security.token.access.AccessTokenFilter;
 
 import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class Config extends WebSecurityConfigurerAdapter {
+public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtFilter jwtFilter;
+    private final AccessTokenFilter accessTokenFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,6 +31,6 @@ public class Config extends WebSecurityConfigurerAdapter {
                 .antMatchers(POST, "/api/auth/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(accessTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -1,18 +1,18 @@
-package org.vbushko.skylon.security;
+package org.vbushko.skylon.security.token.access;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import static org.apache.commons.lang3.time.DateUtils.addSeconds;
 
-@Component
-public class JwtProvider {
+@Service
+public class AccessTokenService {
 
     @Value("${application.security.jwt.secret}")
     private String jwtSecret;
@@ -20,10 +20,7 @@ public class JwtProvider {
     @Value("${application.security.jwt.access-token-expiration-sec}")
     private int jwtAccessTokenExpirationSec;
 
-    @Value("${application.security.jwt.refresh-token-expiration-sec}")
-    private int jwtRefreshTokenExpirationSec;
-
-    public String generateAccessToken(String login) {
+    public String generate(String login) {
         Date now = Calendar.getInstance().getTime();
         Date expiration = addSeconds(now, jwtAccessTokenExpirationSec);
         return Jwts.builder()
@@ -34,18 +31,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String generateRefreshToken(String login) {
-        Date now = Calendar.getInstance().getTime();
-        Date expiration = addSeconds(now, jwtRefreshTokenExpirationSec);
-        return Jwts.builder()
-                .setSubject(login)
-                .setIssuedAt(now)
-                .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS256, jwtSecret)
-                .compact();
-    }
-
-    public boolean validateToken(String token) {
+    public boolean validate(String token) {
         try {
             Jwts.parser()
                     .setSigningKey(jwtSecret)
@@ -57,9 +43,8 @@ public class JwtProvider {
         return false;
     }
 
-    public String getLoginFromToken(String token) {
-        Claims claims = Jwts
-                .parser()
+    public String extractLogin(String token) {
+        Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .getBody();

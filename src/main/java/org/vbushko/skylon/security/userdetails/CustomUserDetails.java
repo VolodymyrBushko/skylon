@@ -1,4 +1,4 @@
-package org.vbushko.skylon.security;
+package org.vbushko.skylon.security.userdetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

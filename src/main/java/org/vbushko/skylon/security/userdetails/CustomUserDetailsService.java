@@ -1,4 +1,4 @@
-package org.vbushko.skylon.security;
+package org.vbushko.skylon.security.userdetails;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

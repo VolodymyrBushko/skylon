@@ -1,4 +1,4 @@
-package org.vbushko.skylon.security;
+package org.vbushko.skylon.security.token.access;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
+import org.vbushko.skylon.security.userdetails.CustomUserDetailsService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,18 +22,18 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 @RequiredArgsConstructor
-public class JwtFilter extends GenericFilterBean {
+public class AccessTokenFilter extends GenericFilterBean {
 
-    private static final TokenType TOKEN_TYPE = TokenType.BEARER;
+    private static final AccessTokenType TOKEN_TYPE = AccessTokenType.BEARER;
 
-    private final JwtProvider jwtProvider;
+    private final AccessTokenService accessTokenService;
     private final CustomUserDetailsService detailsService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         String token = extractToken((HttpServletRequest) request);
-        if (isNotBlank(token) && jwtProvider.validateToken(token)) {
-            String login = jwtProvider.getLoginFromToken(token);
+        if (isNotBlank(token) && accessTokenService.validate(token)) {
+            String login = accessTokenService.extractLogin(token);
             UserDetails customUserDetails = detailsService.loadUserByUsername(login);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);

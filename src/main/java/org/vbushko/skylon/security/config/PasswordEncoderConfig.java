@@ -1,4 +1,4 @@
-package org.vbushko.skylon.security;
+package org.vbushko.skylon.security.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
