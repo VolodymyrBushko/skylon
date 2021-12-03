@@ -34,7 +34,7 @@ public class RefreshToken {
     @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
-    @OneToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude
     private User user;

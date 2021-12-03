@@ -23,6 +23,6 @@ application:
     jwt:
       secret: secret-key
       access-token-expiration-sec: 1 #600
-      refresh-token-expiration-sec: 604800
+      refresh-token-expiration-sec: 1 #604800
     password-encoder:
       strength: 10

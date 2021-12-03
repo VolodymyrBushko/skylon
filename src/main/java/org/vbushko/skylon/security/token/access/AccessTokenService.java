@@ -18,15 +18,15 @@ public class AccessTokenService {
     private String jwtSecret;
 
     @Value("${application.security.jwt.access-token-expiration-sec}")
-    private int jwtAccessTokenExpirationSec;
+    private int jwtTokenExpirationSec;
 
     public String generate(String login) {
         Date now = Calendar.getInstance().getTime();
-        Date expiration = addSeconds(now, jwtAccessTokenExpirationSec);
+        Date expiration = addSeconds(now, jwtTokenExpirationSec);
         return Jwts.builder()
                 .setSubject(login)
                 .setIssuedAt(now)
-                .setExpiration(expiration)
+                .setExpiration(expiration) // TODO: use TimeUtil
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }

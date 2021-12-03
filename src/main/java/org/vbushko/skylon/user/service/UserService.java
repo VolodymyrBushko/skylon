@@ -1,6 +1,7 @@
 package org.vbushko.skylon.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.vbushko.skylon.exception.EntityNotFoundException;
@@ -12,10 +13,24 @@ import org.vbushko.skylon.user.repository.UserRepository;
 public class UserService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public User findByLogin(String login) {
         return repository.findByLogin(login)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public User findByLoginAndPassword(String login, String password) {
+        return repository.findByLogin(login)
+                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public User findByRefreshToken(String token) {
+        return repository.findByRefreshToken(token)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
