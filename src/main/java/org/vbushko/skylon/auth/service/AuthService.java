@@ -50,9 +50,7 @@ public class AuthService {
 
     @Transactional
     public SignInResponseDto signIn(SignInRequestDto request) {
-        String login = request.getLogin();
-        String password = request.getPassword();
-        User user = userService.findByLoginAndPassword(login, password);
+        User user = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
 
         ImmutablePair<String, String> tokens = getTokensPair(user);
         return new SignInResponseDto(tokens.getLeft(), tokens.getRight());

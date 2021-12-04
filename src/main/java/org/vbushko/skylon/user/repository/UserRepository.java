@@ -14,8 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByLoginOrEmail(String login, String email);
 
-    @Query("SELECT u FROM User AS u " +
-            "LEFT JOIN RefreshToken rf " +
-            "WHERE rf.token = ?1")
+    @Query("SELECT u FROM RefreshToken t LEFT JOIN t.user u WHERE t.token = ?1")
     Optional<User> findByRefreshToken(String token);
 }
