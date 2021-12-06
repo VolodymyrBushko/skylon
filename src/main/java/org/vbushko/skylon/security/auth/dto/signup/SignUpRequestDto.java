@@ -1,4 +1,4 @@
-package org.vbushko.skylon.auth.dto.signup;
+package org.vbushko.skylon.security.auth.dto.signup;
 
 import lombok.*;
 

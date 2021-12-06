@@ -1,8 +1,8 @@
-package org.vbushko.skylon.auth.mapper;
+package org.vbushko.skylon.security.auth.mapper;
 
 import org.springframework.stereotype.Component;
-import org.vbushko.skylon.auth.dto.signup.SignUpRequestDto;
-import org.vbushko.skylon.auth.dto.signup.SignUpResponseDto;
+import org.vbushko.skylon.security.auth.dto.signup.SignUpRequestDto;
+import org.vbushko.skylon.security.auth.dto.signup.SignUpResponseDto;
 import org.vbushko.skylon.user.entity.User;
 
 @Component

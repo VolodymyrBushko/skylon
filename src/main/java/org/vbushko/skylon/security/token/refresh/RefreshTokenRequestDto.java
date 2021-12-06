@@ -1,4 +1,4 @@
-package org.vbushko.skylon.auth.dto.signin;
+package org.vbushko.skylon.security.token.refresh;
 
 import lombok.*;
 
@@ -9,8 +9,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignInResponseDto implements Serializable {
+public class RefreshTokenRequestDto implements Serializable {
 
-    private String accessToken;
     private String refreshToken;
 }

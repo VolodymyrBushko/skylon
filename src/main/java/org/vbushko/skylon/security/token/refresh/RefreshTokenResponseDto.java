@@ -1,4 +1,4 @@
-package org.vbushko.skylon.auth.dto.refreshtoken;
+package org.vbushko.skylon.security.token.refresh;
 
 import lombok.*;
 

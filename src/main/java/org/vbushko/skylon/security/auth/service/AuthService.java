@@ -1,17 +1,17 @@
-package org.vbushko.skylon.auth.service;
+package org.vbushko.skylon.security.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.vbushko.skylon.auth.dto.refreshtoken.RefreshTokenRequestDto;
-import org.vbushko.skylon.auth.dto.refreshtoken.RefreshTokenResponseDto;
-import org.vbushko.skylon.auth.dto.signin.SignInRequestDto;
-import org.vbushko.skylon.auth.dto.signin.SignInResponseDto;
-import org.vbushko.skylon.auth.dto.signup.SignUpRequestDto;
-import org.vbushko.skylon.auth.dto.signup.SignUpResponseDto;
-import org.vbushko.skylon.auth.mapper.SignUpMapper;
+import org.vbushko.skylon.security.token.refresh.RefreshTokenRequestDto;
+import org.vbushko.skylon.security.token.refresh.RefreshTokenResponseDto;
+import org.vbushko.skylon.security.auth.dto.signin.SignInRequestDto;
+import org.vbushko.skylon.security.auth.dto.signin.SignInResponseDto;
+import org.vbushko.skylon.security.auth.dto.signup.SignUpRequestDto;
+import org.vbushko.skylon.security.auth.dto.signup.SignUpResponseDto;
+import org.vbushko.skylon.security.auth.mapper.SignUpMapper;
 import org.vbushko.skylon.exception.EntityAlreadyExistsException;
 import org.vbushko.skylon.security.token.access.AccessTokenService;
 import org.vbushko.skylon.security.token.access.AccessTokenType;
@@ -38,7 +38,7 @@ public class AuthService {
     public SignUpResponseDto signUp(SignUpRequestDto request) {
         User user = Optional.of(request)
                 .map(signInMapper::map)
-                .filter(usr -> !userService.existsByLoginOrEmail(usr.getLogin(), usr.getEmail()))
+                .filter(e -> !userService.existsByLoginOrEmail(e.getLogin(), e.getEmail()))
                 .orElseThrow(EntityAlreadyExistsException::new);
 
         String password = passwordEncoder.encode(user.getPassword());

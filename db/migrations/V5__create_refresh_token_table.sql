@@ -4,8 +4,6 @@ CREATE TABLE IF NOT EXISTS refresh_token
     token        VARCHAR(36)                   NOT NULL,
     user_id      BIGINT                        NOT NULL,
     expired_at   TIMESTAMP WITHOUT TIME ZONE   NOT NULL,
-    created_at   TIMESTAMP WITHOUT TIME ZONE   NOT NULL,
-    updated_at   TIMESTAMP WITHOUT TIME ZONE   NOT NULL,
 
     CONSTRAINT PK_REFRESH_TOKEN PRIMARY KEY (id),
 

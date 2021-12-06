@@ -30,7 +30,7 @@ public class RefreshTokenService {
     @Transactional(readOnly = true)
     public void validate(String token) {
         repository.findByToken(token)
-                .filter(tkn -> tkn.getExpiredAt().compareTo(now()) > 0)
+                .filter(e -> e.getExpiredAt().compareTo(now()) > 0)
                 .orElseThrow(RefreshTokenException::new);
     }
 

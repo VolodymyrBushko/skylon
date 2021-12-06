@@ -1,9 +1,6 @@
 package org.vbushko.skylon.security.token.refresh;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.vbushko.skylon.user.entity.User;
 
 import javax.persistence.*;
@@ -15,7 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 public class RefreshToken {
 
     @Id
@@ -25,14 +21,6 @@ public class RefreshToken {
     private Long id;
     private String token;
     private LocalDateTime expiredAt;
-
-    @CreatedDate
-    @EqualsAndHashCode.Exclude
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @EqualsAndHashCode.Exclude
-    private LocalDateTime updatedAt;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

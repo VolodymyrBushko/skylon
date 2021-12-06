@@ -1,15 +1,15 @@
-package org.vbushko.skylon.auth.controller;
+package org.vbushko.skylon.security.auth.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.vbushko.skylon.auth.dto.refreshtoken.RefreshTokenRequestDto;
-import org.vbushko.skylon.auth.dto.refreshtoken.RefreshTokenResponseDto;
-import org.vbushko.skylon.auth.dto.signin.SignInRequestDto;
-import org.vbushko.skylon.auth.dto.signin.SignInResponseDto;
-import org.vbushko.skylon.auth.dto.signup.SignUpRequestDto;
-import org.vbushko.skylon.auth.dto.signup.SignUpResponseDto;
-import org.vbushko.skylon.auth.service.AuthService;
+import org.vbushko.skylon.security.auth.dto.signin.SignInRequestDto;
+import org.vbushko.skylon.security.auth.dto.signin.SignInResponseDto;
+import org.vbushko.skylon.security.auth.dto.signup.SignUpRequestDto;
+import org.vbushko.skylon.security.auth.dto.signup.SignUpResponseDto;
+import org.vbushko.skylon.security.auth.service.AuthService;
+import org.vbushko.skylon.security.token.refresh.RefreshTokenRequestDto;
+import org.vbushko.skylon.security.token.refresh.RefreshTokenResponseDto;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -32,10 +32,5 @@ public class AuthController {
     @PostMapping("/refresh-token")
     public RefreshTokenResponseDto refreshToken(@RequestBody RefreshTokenRequestDto request) {
         return service.refreshToken(request);
-    }
-
-    @GetMapping("/test")
-    public String authTest() {
-        return "The test has been completed successfully!";
     }
 }

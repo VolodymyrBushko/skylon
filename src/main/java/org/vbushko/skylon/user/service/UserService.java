@@ -24,7 +24,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findByLoginAndPassword(String login, String password) {
         return repository.findByLogin(login)
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
+                .filter(e -> passwordEncoder.matches(password, e.getPassword()))
                 .orElseThrow(EntityNotFoundException::new);
     }
 
