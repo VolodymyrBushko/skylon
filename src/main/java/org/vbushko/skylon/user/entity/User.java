@@ -14,7 +14,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "`user`")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,30 +25,41 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
     @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_sequence", allocationSize = 1)
-    @EqualsAndHashCode.Exclude
     private Long id;
+
+    @EqualsAndHashCode.Include
     private String firstName;
+
+    @EqualsAndHashCode.Include
     private String lastName;
+
+    @EqualsAndHashCode.Include
     private String login;
+
+    @EqualsAndHashCode.Include
     private String email;
+
+    @EqualsAndHashCode.Include
     private String description;
+
+    @EqualsAndHashCode.Include
     private String image;
+
+    @EqualsAndHashCode.Include
     private String password;
+
+    @EqualsAndHashCode.Include
     private Integer age;
 
     @CreatedDate
-    @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "sender")
-    @EqualsAndHashCode.Exclude
     private List<Message> messages = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    @EqualsAndHashCode.Exclude
     private List<UserConversation> userConversations = new ArrayList<>();
 }

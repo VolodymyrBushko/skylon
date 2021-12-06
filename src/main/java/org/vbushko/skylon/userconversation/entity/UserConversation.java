@@ -11,32 +11,30 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_conversation")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserConversation {
 
     @EmbeddedId
+    @EqualsAndHashCode.Include
     private UserConversationId id;
 
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    @EqualsAndHashCode.Exclude
     private User user;
 
     @ManyToOne
     @MapsId("conversationId")
     @JoinColumn(name = "conversation_id")
-    @EqualsAndHashCode.Exclude
     private Conversation conversation;
 
     @CreatedDate
-    @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 }

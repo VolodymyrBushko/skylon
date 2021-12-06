@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "refresh_token")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,13 +18,15 @@ public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "refresh_token_id_generator")
     @SequenceGenerator(name = "refresh_token_id_generator", sequenceName = "refresh_token_id_sequence", allocationSize = 1)
-    @EqualsAndHashCode.Exclude
     private Long id;
+
+    @EqualsAndHashCode.Include
     private String token;
+
+    @EqualsAndHashCode.Include
     private LocalDateTime expiredAt;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @EqualsAndHashCode.Exclude
     private User user;
 }

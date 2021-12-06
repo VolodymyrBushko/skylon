@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "message")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,25 +23,22 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_id_generator")
     @SequenceGenerator(name = "message_id_generator", sequenceName = "message_id_sequence", allocationSize = 1)
-    @EqualsAndHashCode.Exclude
     private Long id;
+
+    @EqualsAndHashCode.Include
     private String content;
 
     @CreatedDate
-    @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @EqualsAndHashCode.Exclude
     private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
-    @EqualsAndHashCode.Exclude
     private User sender;
 
     @ManyToOne
     @JoinColumn(name = "conversation_id")
-    @EqualsAndHashCode.Exclude
     private Conversation conversation;
 }
